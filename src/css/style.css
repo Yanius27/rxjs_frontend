@@ -1,0 +1,60 @@
+body {
+  width: 100vh;  
+  margin: auto;
+}
+
+body::after {
+  content: "";
+  background-image: url('../img/42b1b7a7792ba9c66769e2e274d9a383.jpg');
+  background-size: 1900px;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+
+.container {
+  width: 500px;
+  margin: auto;
+  margin-top: 150px;
+}
+
+.title {
+  margin-bottom: 50px;
+
+  font-size: 18px;
+}
+
+.messages {
+  height: 500px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+}
+
+.message {
+  background-color: white;
+  border: 1px solid black;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  box-sizing: border-box
+}
+
+.message_content {
+  width: 33%
+}
+
+.date {
+  text-align: end;
+}
