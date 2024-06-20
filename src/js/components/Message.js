@@ -45,7 +45,7 @@ export default class Message {
   }
 
   #fixDate() {
-    const luxonDate = DateTime.now().setLocale('ru');
+    const luxonDate = DateTime.now();
     return luxonDate.toFormat('HH:mm dd.MM.yyyy'); 
   }
 
