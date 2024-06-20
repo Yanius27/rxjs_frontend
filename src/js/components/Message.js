@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export default class Message {
   constructor(id, email, subject, date) {
@@ -7,6 +7,10 @@ export default class Message {
     this.subject = subject;
     this.date = date;
     this.#createMessage();
+  }
+
+  #formatMessage() {
+    return this.subject.slice(0, 15) + '...';
   }
 
   #createMessage() {
@@ -24,7 +28,7 @@ export default class Message {
     subject.classList.add('message_content');
 
     if (this.subject.length > 15) {
-      this.subject = this.subject.slice(0, 15) + '...';
+      this.subject = this.#formatMessage();
     }
 
     subject.textContent = this.subject;
@@ -41,8 +45,8 @@ export default class Message {
   }
 
   #fixDate() {
-    const momentDate = moment.unix(this.date);
-    return momentDate.format('HH:mm DD.MM.YYYY'); 
+    const luxonDate = DateTime.local().setLocale('ru');
+    return luxonDate.toFormat('HH:mm DD.MM.YYYY'); 
   }
 
   get element() {

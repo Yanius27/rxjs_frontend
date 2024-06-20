@@ -7,26 +7,27 @@ import { debounceTime, distinctUntilChanged, filter, map, pluck, switchMap, exha
 export default class App {
   constructor() {
     this.messages = [];
-    this.port = 8080;
-    this.#createMessageStream();
+    this.intervalOfUpdate = 15000;
+    this.#createMessageStream(document.querySelector('.messages'));
   }
  
   #ajaxNewMessage() {
-    return ajax('http://localhost:9090/messages/unread');
+    return ajax(`http://localhost:8090/messages/unread`);
   }
 
-  #createMessageStream() {
-    const messageContainer = document.querySelector('.messages');
-
-    const messageStream$ = interval(15000)
+  #createMessageStream(container) {
+    const messageStream$ = interval(this.intervalOfUpdate)
       .pipe(
         switchMap(this.#ajaxNewMessage),
-        pluck('response')
+        pluck('response'),
+        catchError(err => {
+          console.log('Message request caused an error');
+        })
       )
     
     messageStream$.subscribe({
       next: response => {
-        messageContainer.textContent = '' ;
+        container.textContent = '' ;
 
         response.messages.forEach(message => {
           console.log(message);
@@ -34,7 +35,7 @@ export default class App {
 
           const newMessage = new Message(id, from, subject, received).element;
 
-          messageContainer.append(newMessage);
+          container.append(newMessage);
         });
       },
 
